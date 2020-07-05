@@ -1,7 +1,6 @@
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
-import crypto from 'crypto';
 
 const ONE_DAY = 1000 * 60 * 60 * 24;
 
@@ -9,13 +8,6 @@ export const config = {
   // ENVIROMENT
   mode: process.env.NODE_ENV,
   port: process.env.PORT,
-
-  // DATABASE
-  dbUser: process.env.DB_USER,
-  dbPassword: process.env.DB_PASSWORD,
-  dbHost: process.env.DB_HOST,
-  dbPort: process.env.DB_PORT,
-  dbName: process.env.DB_NAME,
 
   // SESSION EXPRESS
   sessSecret: process.env.SESS_SECRET,

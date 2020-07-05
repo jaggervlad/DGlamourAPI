@@ -1,12 +1,11 @@
 import mongoose from 'mongoose';
-import { DB_URI, DB_OPTIONS } from '../config';
+import { DB_OPTIONS } from '../config';
 
 export const connectDB = async () => {
-  const dbUri = DB_URI;
   try {
-    await mongoose.connect(dbUri, DB_OPTIONS);
+    await mongoose.connect(process.env.DB_URI);
 
-    console.log(`DB conectada: ${dbUri}`);
+    console.log(`DB conectada: ${process.env.DB_URI}`);
   } catch (error) {
     console.log('Hubo un error al conectar la BD');
     console.log(error);
