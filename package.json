@@ -1,0 +1,37 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon src/index.js -e js, graphql --exec babel-node"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "2.15.0",
+    "apollo-server-express": "2.15.0",
+    "bcrypt": "5.0.0",
+    "connect-redis": "4.0.4",
+    "cookie": "0.4.1",
+    "cors": "2.8.5",
+    "dotenv": "8.2.0",
+    "express-session": "1.17.1",
+    "graphql": "15.1.0",
+    "ioredis": "4.17.3",
+    "jsonwebtoken": "8.5.1",
+    "lodash": "4.17.15",
+    "merge-graphql-schemas": "1.7.8",
+    "mongoose": "5.9.20"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.10.3",
+    "@babel/core": "7.10.3",
+    "@babel/node": "7.10.3",
+    "@babel/preset-env": "7.10.3",
+    "webpack": "4.43.0",
+    "webpack-dev-server": "3.11.0"
+  }
+}

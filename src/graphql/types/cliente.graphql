@@ -1,0 +1,30 @@
+type Cliente {
+  id: ID
+  nombre: String
+  apellido: String
+  empresa: String
+  email: String
+  telefono: String
+  vendedor: Usuario
+}
+
+input ClienteInput {
+  nombre: String!
+  apellido: String!
+  empresa: String!
+  email: String!
+  telefono: String
+}
+
+type Query {
+  #Clientes
+  obtenerClientes: [Cliente]
+  obtenerClientesVendedor: [Cliente]
+  obtenerCliente(id: ID!): Cliente
+}
+type Mutation {
+  # Clientes
+  nuevoCliente(input: ClienteInput): Cliente
+  actualizarCliente(id: ID!, input: ClienteInput): Cliente
+  eliminarCliente(id: ID!): String
+}
