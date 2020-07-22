@@ -1,26 +1,36 @@
 type Producto {
   id: ID
+  codigo: String
   nombre: String
   existencia: Int
   precio: Float
   creado: String
+  categoria: Categoria
+  marca: String
+  undMed: String
+  presentacion: String
 }
 
 input ProductoInput {
+  codigo: String!
   nombre: String!
   existencia: Int!
   precio: Float!
+  categoria: ID!
+  marca: String!
+  undMed: String!
+  presentacion: String!
 }
 
-type Query {
+extend type Query {
   # Productos
   obtenerProductos: [Producto]
   obtenerProducto(id: ID!): Producto
 }
 
-type Mutation {
+extend type Mutation {
   # Productos
-  nuevoProducto(input: ProductoInput): Producto
-  actualizarProducto(id: ID!, input: ProductoInput): Producto
+  nuevoProducto(input: ProductoInput!): Producto
+  actualizarProducto(id: ID!, input: ProductoInput!): Producto
   eliminarProducto(id: ID!): String
 }

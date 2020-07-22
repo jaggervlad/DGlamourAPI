@@ -1,15 +1,9 @@
-import { Schema, model } from 'mongoose';
-import { hashPassword, validatePassword } from '../utils/hashed';
-import { compare } from 'bcrypt';
+const { Schema, model } = require('mongoose');
+const { hashPassword, validatePassword } = require('../utils/hashed');
 
 const UsuariosSchema = new Schema(
   {
     nombre: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    apellido: {
       type: String,
       required: true,
       trim: true,
@@ -28,6 +22,12 @@ const UsuariosSchema = new Schema(
     creado: {
       type: Date,
       default: Date.now(),
+    },
+    rol: {
+      type: String,
+      trim: true,
+      required: true,
+      default: 'USUARIO',
     },
   },
   { timestamps: true }
@@ -58,4 +58,4 @@ UsuariosSchema.methods.comparePassword = async function (pw) {
   return this;
 };
 
-export const Usuario = model('Usuario', UsuariosSchema);
+module.exports.Usuario = model('Usuario', UsuariosSchema);

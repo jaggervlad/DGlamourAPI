@@ -1,9 +1,10 @@
-import { Usuario } from '../../database/Usuario';
-import { iniciarSesion, cerrarSesion } from '../../utils/auth';
+const { Usuario } = require('../../database/Usuario');
+const { iniciarSesion, cerrarSesion } = require('../../utils/auth');
 
-export default {
+module.exports = {
   Query: {
     obtenerUsuario: async (_, __, ctx) => {
+      console.log(ctx.usuario);
       if (!ctx.usuario) return null;
       return ctx.usuario;
     },
@@ -11,15 +12,15 @@ export default {
 
   Mutation: {
     nuevoUsuario: async (_, { id, input }) => {
-      const { nombre, apellido, username, password } = input;
+      const { nombre, username, password, rol } = input;
       if (id) {
         try {
           const dbUsuario = await Usuario.findById(id);
           if (!dbUsuario) throw new Error('No existe el usuario');
           dbUsuario.nombre = nombre;
-          dbUsuario.apellido = apellido;
           dbUsuario.username = username;
           dbUsuario.password = password;
+          dbUsuario.rol = rol;
           await dbUsuario.save();
           return dbUsuario;
         } catch (error) {
@@ -43,8 +44,8 @@ export default {
     },
     autenticarUsuario: async (_, { input }, { req }) => {
       const { username, password } = input;
-      const token = await iniciarSesion({ username, password });
-      req.session.token = token;
+      const usuarioId = await iniciarSesion({ username, password });
+      req.session.usuarioId = usuarioId;
       return 'Bienvenido  a la aplicacion!';
     },
 

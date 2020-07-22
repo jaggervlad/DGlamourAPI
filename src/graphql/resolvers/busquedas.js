@@ -1,6 +1,7 @@
-import { Pedido } from '../../database/Pedido';
+const { Pedido } = require('../../database/Pedido');
+const { Producto } = require('../../database/Producto');
 
-export default {
+module.exports = {
   Query: {
     mejoresClientes: async () => {
       try {

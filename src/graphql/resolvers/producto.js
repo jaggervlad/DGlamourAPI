@@ -1,8 +1,14 @@
-import { Producto } from '../../database/Producto';
+const { Producto } = require('../../database/Producto');
+const { Categoria } = require('../../database/Categoria');
 
-export default {
+module.exports = {
+  Producto: {
+    categoria: async (parent, _args, { loader }) => {
+      return loader.single.load(Categoria, parent.categoria);
+    },
+  },
   Query: {
-    obtenerProductos: async (_, __, { req }) => {
+    obtenerProductos: async (_, __, ___) => {
       try {
         const productos = await Producto.find({});
         return productos;
@@ -22,11 +28,9 @@ export default {
   },
   Mutation: {
     nuevoProducto: async (_, { input }) => {
-      const existProduct = await Producto.findOne({ nombre: input.nombre });
+      const existProduct = await Producto.findOne({ codigo: input.codigo });
       if (existProduct)
-        throw new Error(
-          `El producto nombre: ${input.nombre}, ya existe en la base de datos`
-        );
+        throw new Error(`El producto  ya existe en la base de datos`);
       try {
         const producto = new Producto(input);
         producto.id = producto._id;
@@ -38,7 +42,6 @@ export default {
       }
     },
     actualizarProducto: async (_, { id, input }) => {
-      // revisar si el producto existe o no
       try {
         return await Producto.findOneAndUpdate({ _id: id }, input, {
           new: true,

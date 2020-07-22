@@ -1,17 +1,19 @@
-import cors from 'cors';
-import express from 'express';
-import { apolloServer } from './server';
-import { connectDB } from './database';
+const express = require('express');
+const cors = require('cors');
+const morgan = require('morgan');
+const helmet = require('helmet');
+const { apolloServer } = require('./server');
+const { connectDB } = require('./database');
 // CONFIG VARIABLES
-import { config, SESS_OPTIONS, REDIS_OPTIONS } from './config';
+const { CONFIG, SESS_OPTIONS, REDIS_OPTIONS, corsOpts } = require('./config');
 
 // SERVER
 const app = express();
 app.disable('x-powered-by');
 // SESSIONS
-import session from 'express-session';
-import Redis from 'ioredis';
-import connectRedis from 'connect-redis';
+const session = require('express-session');
+const connectRedis = require('connect-redis');
+const Redis = require('ioredis');
 
 const RedisStore = connectRedis(session);
 const store = new RedisStore({
@@ -22,18 +24,11 @@ const handlerSession = session({
   ...SESS_OPTIONS,
 });
 
-const corsOpts = {
-  origin: [
-    'http://localhost:3000',
-    'http://localhost:4000',
-    'http://localhost:4000/graphql',
-  ],
-  credentials: true,
-};
-
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(morgan('dev'));
+app.use(helmet());
 app.use(handlerSession);
 app.use(cors(corsOpts));
 
@@ -43,8 +38,8 @@ connectDB();
 // CONNECT APOLLO WITH EXPRESS
 apolloServer.applyMiddleware({ app, cors: false });
 
-app.listen(config.port, () => {
+app.listen(CONFIG.port, () => {
   console.log(
-    `Server running: http://localhost:${config.port}${apolloServer.graphqlPath}`
+    `Server running: http://localhost:${CONFIG.port}${apolloServer.graphqlPath}`
   );
 });

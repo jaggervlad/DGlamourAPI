@@ -1,9 +1,9 @@
-import mongoose from 'mongoose';
-import { DB_OPTIONS } from '../config';
+const mongoose = require('mongoose');
+const { DB_OPTIONS } = require('../config');
 
-export const connectDB = async () => {
+module.exports.connectDB = async () => {
   try {
-    await mongoose.connect(process.env.DB_URI);
+    await mongoose.connect(process.env.DB_URI, DB_OPTIONS);
 
     console.log(`DB conectada: ${process.env.DB_URI}`);
   } catch (error) {

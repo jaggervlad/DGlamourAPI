@@ -31,17 +31,19 @@ input PedidoProductoInput {
 
 enum EstadoPedido {
   PENDIENTE
-  COMPLETADO
-  CANCELADO
+  PAGADO
+  DESPACHADO
 }
-type Query {
+
+extend type Query {
   # Pedidos
   obtenerPedidos: [Pedido]
   obtenerPedidosVendedor: [Pedido]
   obtenerPedido(id: ID!): Pedido
   obtenerPedidosEstado(estado: String!): [Pedido]
 }
-type Mutation {
+
+extend type Mutation {
   # Pedidos
   actualizarPedido(id: ID!, input: PedidoInput): Pedido
   eliminarPedido(id: ID!): String

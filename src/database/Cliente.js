@@ -1,43 +1,45 @@
-import { Schema, model } from 'mongoose';
+const { Schema, model } = require('mongoose');
 
 const ClientesSchema = new Schema(
   {
+    cedula: {
+      type: String,
+      unique: true,
+      required: true,
+      trim: true,
+    },
     nombre: {
       type: String,
       required: true,
       trim: true,
     },
-    apellido: {
+    mail: {
       type: String,
       required: true,
       trim: true,
-    },
-    empresa: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    email: {
-      type: String,
-      required: true,
-      trim: true,
-      unique: true,
     },
     telefono: {
       type: String,
+      required: true,
       trim: true,
     },
-    creado: {
-      type: Date,
-      default: Date.now(),
-    },
-    vendedor: {
-      type: Schema.Types.ObjectId,
+    direccion: {
+      type: String,
+      trim: true,
       required: true,
-      ref: 'Usuario',
+    },
+    ciudad: {
+      type: String,
+      trim: true,
+      required: true,
+    },
+    estado: {
+      type: Boolean,
+      trim: true,
+      default: true,
     },
   },
   { timestamps: true }
 );
 
-export const Cliente = model('Cliente', ClientesSchema);
+module.exports.Cliente = model('Cliente', ClientesSchema);

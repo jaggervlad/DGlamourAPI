@@ -8,7 +8,7 @@ type TopVendedor {
   vendedor: [Usuario]
 }
 
-type Query {
+extend type Query {
   # Busquedas Avanzadas
   mejoresClientes: [TopCliente]
   mejoresVendedores: [TopVendedor]

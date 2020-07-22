@@ -1,7 +1,12 @@
-import { Schema, model } from 'mongoose';
+const { Schema, model } = require('mongoose');
 
 const ProductosSchema = new Schema(
   {
+    codigo: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     nombre: {
       type: String,
       required: true,
@@ -17,6 +22,27 @@ const ProductosSchema = new Schema(
       required: true,
       trim: true,
     },
+    marca: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    undMed: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    presentacion: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    categoria: {
+      type: Schema.Types.ObjectId,
+      ref: 'Categoria',
+      required: true,
+      trim: true,
+    },
     creado: {
       type: Date,
       default: Date.now(),
@@ -27,4 +53,4 @@ const ProductosSchema = new Schema(
 
 ProductosSchema.index({ nombre: 'text' });
 
-export const Producto = model('Producto', ProductosSchema);
+module.exports.Producto = model('Producto', ProductosSchema);

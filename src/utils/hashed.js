@@ -1,12 +1,12 @@
-import bcrypt from 'bcrypt';
+const bcrypt = require('bcrypt');
 
-export const hashPassword = async (pwd) => {
+module.exports.hashPassword = async (pwd) => {
   if (!pwd) return '';
   const salt = await bcrypt.genSalt(10);
   return await bcrypt.hash(pwd, salt);
 };
 
-export const validatePassword = async (inputPsw, bdPsw) => {
+module.exports.validatePassword = async (inputPsw, bdPsw) => {
   const validPassword = await bcrypt.compare(inputPsw, bdPsw);
   if (!validPassword) throw new Error('Credenciales incorrectas');
   return validPassword;

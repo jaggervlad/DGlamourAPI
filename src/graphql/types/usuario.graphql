@@ -1,16 +1,16 @@
 type Usuario {
   id: ID
   nombre: String
-  apellido: String
   username: String
   creado: String
+  rol: RolUsuario
 }
 
 input UsuarioInput {
   nombre: String!
-  apellido: String!
   username: String!
   password: String!
+  rol: RolUsuario
 }
 
 input AutenticarInput {
@@ -18,12 +18,17 @@ input AutenticarInput {
   password: String!
 }
 
-type Query {
-  #Usuarios
-  obtenerUsuario: Usuario
+enum RolUsuario {
+  ADMINISTRADOR
+  USUARIO
 }
 
-type Mutation {
+extend type Query {
+  #Usuarios
+  obtenerUsuario: Usuario @auth
+}
+
+extend type Mutation {
   # Usuarios
   nuevoUsuario(id: ID, input: UsuarioInput): Usuario
   autenticarUsuario(input: AutenticarInput): String

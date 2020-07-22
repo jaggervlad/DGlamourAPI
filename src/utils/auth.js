@@ -1,11 +1,10 @@
-import { Usuario } from '../database/Usuario';
-import { AuthenticationError } from 'apollo-server-express';
-import { config } from '../config';
-import { signJwt } from './token';
+const { Usuario } = require('../database/Usuario');
+const { AuthenticationError } = require('apollo-server-express');
+const { CONFIG } = require('../config');
 
-const enLinea = (req) => req.session.token;
+const enLinea = (req) => req.session.usuarioId;
 
-export const iniciarSesion = async ({ username, password }) => {
+module.exports.iniciarSesion = async ({ username, password }) => {
   const usuario = await Usuario.findOne({ username });
   if (!usuario) {
     throw new AuthenticationError(
@@ -13,35 +12,40 @@ export const iniciarSesion = async ({ username, password }) => {
     );
   }
   await usuario.comparePassword(password);
-  const token = signJwt(usuario, '1h');
-  if (!token)
-    throw new AuthenticationError(
-      'No se pudo iniciar sesion, porfavor intenta de nuevo!'
-    );
-  return token;
+  const usuarioId = usuario._id;
+  return usuarioId;
 };
 
-export const cerrarSesion = (req, res) => {
+module.exports.cerrarSesion = (req, res) => {
   return new Promise((resolve, reject) => {
     req.session.destroy((error) => {
       if (error) reject(error);
 
-      res.clearCookie(config.sessName);
+      res.clearCookie(CONFIG.sessName);
       resolve(true);
     });
   });
 };
 
-export const asegurarInicio = (req) => {
+module.exports.asegurarInicio = (req) => {
   if (!enLinea(req)) {
-    throw new AuthenticationError('Debes estar logueado');
+    throw new AuthenticationError('Debes iniciar sesion');
   }
   return true;
 };
 
-export const asegurarCierre = (req) => {
+module.exports.asegurarCierre = (req) => {
   if (enLinea(req)) {
     throw new AuthenticationError('Aun estas logueado');
   }
   return true;
+};
+
+module.exports.authContext = async (req) => {
+  const id = req.session.usuarioId;
+  try {
+    return await Usuario.findById(id);
+  } catch (error) {
+    throw new Error('Error! No se pudo autenticar');
+  }
 };
