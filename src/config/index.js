@@ -66,6 +66,8 @@ module.exports.corsOpts = {
     'http://localhost:3000',
     'http://localhost:4000',
     'http://localhost:4000/graphql',
+    'https://blooming-citadel-99802.herokuapp.com/',
+    'https://dglamour-client.vercel.app',
   ],
   credentials: true,
 };
