@@ -19,6 +19,9 @@ CONFIG.redisHost = process.env.REDIS_HOST;
 CONFIG.redisPort = process.env.REDIS_PORT;
 CONFIG.redisPass = process.env.REDIS_PASSWORD;
 
+//DB
+CONFIG.dbUri = process.env.DB_URI;
+
 module.exports.CONFIG = CONFIG;
 
 const IN_PROD = CONFIG.mode === 'production';

@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
-const { DB_OPTIONS } = require('../config');
+const { DB_OPTIONS, CONFIG } = require('../config');
 
 module.exports.connectDB = async () => {
   try {
-    await mongoose.connect(process.env.DB_URI, DB_OPTIONS);
+    await mongoose.connect(CONFIG.dbUri, DB_OPTIONS);
 
-    console.log(`DB conectada: ${process.env.DB_URI}`);
+    console.log(`DB conectada: ${CONFIG.dbUri}`);
   } catch (error) {
     console.log('Hubo un error al conectar la BD');
     console.log(error);
