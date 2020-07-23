@@ -27,7 +27,7 @@ const handlerSession = session({
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(morgan('dev'));
+app.use(morgan('common'));
 app.use(helmet());
 app.use(handlerSession);
 app.use(cors(corsOpts));

@@ -6,7 +6,7 @@ module.exports = {
     mejoresClientes: async () => {
       try {
         return await Pedido.aggregate([
-          { $match: { estado: 'COMPLETADO' } },
+          { $match: { estado: 'PAGADO' } },
           {
             $group: {
               _id: '$cliente',
@@ -31,7 +31,7 @@ module.exports = {
     mejoresVendedores: async () => {
       try {
         return await Pedido.aggregate([
-          { $match: { estado: 'COMPLETADO' } },
+          { $match: { estado: 'PAGADO' } },
           {
             $group: {
               _id: '$vendedor',

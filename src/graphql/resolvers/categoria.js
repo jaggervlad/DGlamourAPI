@@ -10,10 +10,11 @@ module.exports = {
       }
     },
     obtenerCategoria: async (_, { id }, __) => {
-      const categoriaExistente = await Categoria.findById(id);
-      if (!categoriaExistente) throw new Error('No existe esa categoria');
-
-      return categoriaExistente;
+      try {
+        return await Categoria.findById(id);
+      } catch (error) {
+        throw new Error('No existe esa categoria');
+      }
     },
   },
   Mutation: {
@@ -39,7 +40,6 @@ module.exports = {
       }
     },
     eliminarCategoria: async (_, { id }, __) => {
-      console.log(id);
       try {
         await Categoria.findByIdAndDelete(id);
         return 'Categoria eliminada';

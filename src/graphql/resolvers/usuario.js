@@ -4,7 +4,6 @@ const { iniciarSesion, cerrarSesion } = require('../../utils/auth');
 module.exports = {
   Query: {
     obtenerUsuario: async (_, __, ctx) => {
-      console.log(ctx.usuario);
       if (!ctx.usuario) return null;
       return ctx.usuario;
     },
