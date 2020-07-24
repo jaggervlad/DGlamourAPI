@@ -30,13 +30,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(morgan('common'));
 app.use(helmet());
 app.use(handlerSession);
-// app.use(cors(corsOpts));
+app.use(cors(corsOpts));
 
 // DB Connect
 connectDB();
 
 // CONNECT APOLLO WITH EXPRESS
-apolloServer.applyMiddleware({ app, cors: corsOpts });
+apolloServer.applyMiddleware({ app, cors: false });
 
 app.listen(CONFIG.port || 4000, () => {
   console.log(

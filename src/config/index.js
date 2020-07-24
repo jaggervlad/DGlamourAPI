@@ -61,6 +61,7 @@ module.exports.APOLLO_OPTIONS = {
         },
       },
 };
+
 module.exports.corsOpts = {
   origin: 'https://dglamour-client.vercel.app',
   credentials: true,
