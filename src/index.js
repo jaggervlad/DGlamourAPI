@@ -30,7 +30,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(morgan('common'));
 app.use(helmet());
 app.use(handlerSession);
-app.use(cors({ origin: true, credentials: true }));
 
 // DB Connect
 connectDB();
