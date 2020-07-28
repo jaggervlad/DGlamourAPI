@@ -65,15 +65,7 @@ module.exports.APOLLO_OPTIONS = {
       },
 };
 
-let whiteList = ['https://dglamour-client.vercel.app'];
-
 module.exports.corsOpts = {
-  origin: function (origin, cb) {
-    if (whiteList.indexOf(origin) !== -1) {
-      cb(null, true);
-    } else {
-      cb(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: true,
   credentials: true,
 };
