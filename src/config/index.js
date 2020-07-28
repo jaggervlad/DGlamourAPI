@@ -65,7 +65,7 @@ module.exports.APOLLO_OPTIONS = {
       },
 };
 
-let whiteList = ['http://localhost:3000'];
+let whiteList = ['https://dglamour-client.vercel.app'];
 
 module.exports.corsOpts = {
   origin: function (origin, cb) {
