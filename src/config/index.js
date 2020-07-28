@@ -51,6 +51,8 @@ module.exports.SESS_OPTIONS = {
   cookie: {
     maxAge: +SESS_LIFETIME,
     secure: IN_PROD,
+    httpOnly: true,
+    sameSite: true,
   },
 };
 

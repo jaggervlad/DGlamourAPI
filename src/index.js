@@ -6,7 +6,7 @@ const helmet = require('helmet');
 const { apolloServer } = require('./server');
 const { connectDB } = require('./database');
 // CONFIG VARIABLES
-const { PORT, SESS_OPTIONS, REDIS_OPTIONS } = require('./config');
+const { PORT, SESS_OPTIONS, REDIS_OPTIONS, IN_PROD } = require('./config');
 
 app.disable('x-powered-by');
 
@@ -25,6 +25,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(helmet());
 app.use(morgan('common'));
+if (IN_PROD) app.set('trust proxy', 1);
 app.use(
   session({
     store,
@@ -39,7 +40,7 @@ connectDB();
 apolloServer.applyMiddleware({
   app,
   cors: {
-    origin: 'https://dglamour-client.vercel.app',
+    origin: ['https://dglamour-client.vercel.app', 'http://localhost:3000'],
     credentials: true,
   },
 });
