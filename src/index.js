@@ -1,14 +1,13 @@
 const express = require('express');
+const app = express();
 const cors = require('cors');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const { apolloServer } = require('./server');
 const { connectDB } = require('./database');
 // CONFIG VARIABLES
-const { CONFIG, SESS_OPTIONS, REDIS_OPTIONS, corsOpts } = require('./config');
+const { PORT, SESS_OPTIONS, REDIS_OPTIONS, corsOpts } = require('./config');
 
-// SERVER
-const app = express();
 app.disable('x-powered-by');
 // SESSIONS
 const session = require('express-session');
@@ -27,8 +26,9 @@ const handlerSession = session({
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(morgan('common'));
 app.use(helmet());
+app.use(cors(corsOpts));
+app.use(morgan('common'));
 app.use(handlerSession);
 
 // DB Connect
@@ -37,8 +37,8 @@ connectDB();
 // CONNECT APOLLO WITH EXPRESS
 apolloServer.applyMiddleware({ app, cors: false });
 
-app.listen(CONFIG.port || 4000, () => {
+app.listen(+PORT || 4000, () => {
   console.log(
-    `Server running: http://localhost:${CONFIG.port}${apolloServer.graphqlPath}`
+    `Server running: http://localhost:${PORT}${apolloServer.graphqlPath}`
   );
 });

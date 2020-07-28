@@ -1,30 +1,33 @@
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
-}
-
 const ONE_DAY = 1000 * 60 * 60 * 24;
-let CONFIG = {};
+const {
+  // ENVIROMENT
+  NODE_ENV = 'production',
+  PORT = 4000,
 
-// ENVIROMENT
-CONFIG.mode = process.env.NODE_ENV;
-CONFIG.port = process.env.PORT;
+  // SESSION EXPRESS
+  SESS_SECRET = '27b0a742e2112f067faee7959d5b5ca0aacd991ce8599cb0165ca0044024212e',
+  SESS_NAME = 'sid',
+  SESS_LIFETIME = ONE_DAY,
 
-// SESSION EXPRESS
-CONFIG.sessSecret = process.env.SESS_SECRET;
-CONFIG.sessName = process.env.SESS_NAME;
-CONFIG.sessLifetime = ONE_DAY;
+  // REDIS
+  REDIS_HOST = 'redis-17801.c17.us-east-1-4.ec2.cloud.redislabs.com',
+  REDIS_PORT = 17801,
+  REDIS_PASSWORD = '2vNxtuPLJT2V1nsZe2MJDStBk0oMyUM9',
 
-// REDIS
-CONFIG.redisHost = process.env.REDIS_HOST;
-CONFIG.redisPort = process.env.REDIS_PORT;
-CONFIG.redisPass = process.env.REDIS_PASSWORD;
+  //DB
+  DB_USERNAME = 'administrador',
+  DB_PASSWORD = 'C58dIq9PihZ8wixj',
+  DB_HOST = 'cluster0.mvoxt.mongodb.net',
+  DB_NAME = 'dglamourapi',
+} = process.env;
 
-//DB
-CONFIG.dbUri = process.env.DB_URI;
+const IN_PROD = NODE_ENV === 'production';
 
-module.exports.CONFIG = CONFIG;
+module.exports = { IN_PROD, PORT };
 
-const IN_PROD = CONFIG.mode === 'production';
+module.exports.DB_URI = `mongodb+srv://${DB_USERNAME}:${encodeURIComponent(
+  DB_PASSWORD
+)}@${DB_HOST}/${DB_NAME}?retryWrites=true&w=majority`;
 
 module.exports.DB_OPTIONS = {
   useNewUrlParser: true,
@@ -34,19 +37,19 @@ module.exports.DB_OPTIONS = {
 };
 
 module.exports.REDIS_OPTIONS = {
-  host: CONFIG.redisHost,
-  port: +CONFIG.redisPort,
-  password: CONFIG.redisPass,
+  host: REDIS_HOST,
+  port: +REDIS_PORT,
+  password: REDIS_PASSWORD,
 };
 
 module.exports.SESS_OPTIONS = {
-  name: CONFIG.sessName,
-  secret: CONFIG.sessSecret,
-  resave: true,
+  name: SESS_NAME,
+  secret: SESS_SECRET,
+  resave: false,
   rolling: true,
   saveUninitialized: false,
   cookie: {
-    maxAge: +CONFIG.sessLifetime,
+    maxAge: +SESS_LIFETIME,
     sameSite: true,
     secure: IN_PROD,
   },
@@ -62,7 +65,15 @@ module.exports.APOLLO_OPTIONS = {
       },
 };
 
+let whiteList = ['http://localhost:3000'];
+
 module.exports.corsOpts = {
-  origin: 'https://dglamour-client-git-master.jaggersaa96.vercel.app/',
+  origin: function (origin, cb) {
+    if (whiteList.indexOf(origin) !== -1) {
+      cb(null, true);
+    } else {
+      cb(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
 };
