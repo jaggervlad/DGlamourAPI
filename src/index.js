@@ -39,7 +39,7 @@ connectDB();
 apolloServer.applyMiddleware({
   app,
   cors: {
-    origin: ['https://dglamour-client.vercel.app', 'http://localhost:3000'],
+    origin: 'https://dglamour-client.vercel.app',
     credentials: true,
   },
 });
