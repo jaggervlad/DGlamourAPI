@@ -1,7 +1,7 @@
 const ONE_DAY = 1000 * 60 * 60 * 24;
 const {
   // ENVIROMENT
-  NODE_ENV = 'development',
+  NODE_ENV = 'dev',
   PORT = 4000,
 
   // SESSION EXPRESS
@@ -15,10 +15,10 @@ const {
   REDIS_PASSWORD = '2vNxtuPLJT2V1nsZe2MJDStBk0oMyUM9',
 
   //DB
-  DB_USERNAME = 'administrador',
-  DB_PASSWORD = 'C58dIq9PihZ8wixj',
-  DB_HOST = 'cluster0.mvoxt.mongodb.net',
-  DB_NAME = 'dglamourapi',
+  DB_USERNAME,
+  DB_PASSWORD,
+  DB_HOST,
+  DB_NAME,
 } = process.env;
 
 const IN_PROD = NODE_ENV === 'production';

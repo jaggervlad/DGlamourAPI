@@ -10,6 +10,7 @@ const { PORT, SESS_OPTIONS, REDIS_OPTIONS } = require('./config');
 
 app.disable('x-powered-by');
 
+console.log(SESS_OPTIONS);
 // SESSIONS
 const session = require('express-session');
 const connectRedis = require('connect-redis');
