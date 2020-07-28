@@ -23,7 +23,7 @@ const {
 
 const IN_PROD = NODE_ENV === 'production';
 
-module.exports = { IN_PROD, PORT };
+module.exports = { IN_PROD, PORT, SESS_NAME };
 
 module.exports.DB_URI = `mongodb+srv://${DB_USERNAME}:${encodeURIComponent(
   DB_PASSWORD

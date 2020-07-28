@@ -1,6 +1,6 @@
 const { Usuario } = require('../database/Usuario');
 const { AuthenticationError } = require('apollo-server-express');
-const { CONFIG } = require('../config');
+const { SESS_NAME } = require('../config');
 
 const enLinea = (req) => req.session.usuarioId;
 
@@ -21,7 +21,7 @@ module.exports.cerrarSesion = (req, res) => {
     req.session.destroy((error) => {
       if (error) reject(error);
 
-      res.clearCookie(CONFIG.sessName);
+      res.clearCookie(SESS_NAME);
       resolve(true);
     });
   });
