@@ -1,7 +1,7 @@
 const ONE_DAY = 1000 * 60 * 60 * 24;
 const {
   // ENVIROMENT
-  NODE_ENV = 'production',
+  NODE_ENV = 'development',
   PORT = 4000,
 
   // SESSION EXPRESS
@@ -50,7 +50,6 @@ module.exports.SESS_OPTIONS = {
   saveUninitialized: false,
   cookie: {
     maxAge: +SESS_LIFETIME,
-    sameSite: true,
     secure: IN_PROD,
   },
 };
@@ -63,9 +62,4 @@ module.exports.APOLLO_OPTIONS = {
           'request.credentials': 'include',
         },
       },
-};
-
-module.exports.corsOpts = {
-  origin: true,
-  credentials: true,
 };
