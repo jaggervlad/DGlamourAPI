@@ -21,14 +21,22 @@ input ClienteInput {
 
 extend type Query {
   #Clientes
-  obtenerClientes: [Cliente]
+  obtenerClientes: [Cliente] @hasRole(roles: [ADMINISTRADOR, USUARIO]) @auth
   obtenerClientesVendedor: [Cliente]
+    @hasRole(roles: [ADMINISTRADOR, USUARIO])
+    @auth
   obtenerCliente(id: ID!): Cliente
+    @hasRole(roles: [ADMINISTRADOR, USUARIO])
+    @auth
 }
 
 extend type Mutation {
   # Clientes
   nuevoCliente(input: ClienteInput!): Cliente
+    @hasRole(roles: [ADMINISTRADOR])
+    @auth
   actualizarCliente(id: ID!, input: ClienteInput!): Cliente
-  eliminarCliente(id: ID!): String
+    @hasRole(roles: [ADMINISTRADOR])
+    @auth
+  eliminarCliente(id: ID!): String @hasRole(roles: [ADMINISTRADOR]) @auth
 }

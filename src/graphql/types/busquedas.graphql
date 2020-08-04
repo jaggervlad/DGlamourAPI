@@ -10,7 +10,9 @@ type TopVendedor {
 
 extend type Query {
   # Busquedas Avanzadas
-  mejoresClientes: [TopCliente]
-  mejoresVendedores: [TopVendedor]
+  mejoresClientes: [TopCliente] @hasRole(roles: [ADMINISTRADOR]) @auth
+  mejoresVendedores: [TopVendedor] @hasRole(roles: [ADMINISTRADOR]) @auth
   buscarProducto(texto: String!): [Producto]
+    @hasRole(roles: [ADMINISTRADOR])
+    @auth
 }

@@ -24,6 +24,18 @@ const ProductoSchema = new Schema(
       type: String,
       default: 'PENDIENTE',
     },
+    direccion: {
+      type: String,
+      required: true,
+    },
+    pago: {
+      type: String,
+      trim: true,
+    },
+    descripcion: {
+      type: String,
+      trim: true,
+    },
     creado: {
       type: Date,
       default: Date.now(),

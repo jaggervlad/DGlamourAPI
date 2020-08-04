@@ -6,6 +6,10 @@ type Pedido {
   vendedor: Usuario
   fecha: String
   estado: EstadoPedido
+  direccion: String
+  codigo: String
+  pago: TipoPago
+  descripcion: String
 }
 
 type PedidoGrupo {
@@ -20,6 +24,10 @@ input PedidoInput {
   total: Float
   cliente: ID
   estado: EstadoPedido
+  direccion: String
+  codigo: String
+  pago: TipoPago
+  descripcion: String
 }
 
 input PedidoProductoInput {
@@ -27,6 +35,12 @@ input PedidoProductoInput {
   cantidad: Int
   nombre: String
   precio: Float
+}
+
+enum TipoPago {
+  BANCO
+  EFECTIVO
+  MIXTO
 }
 
 enum EstadoPedido {
@@ -37,15 +51,28 @@ enum EstadoPedido {
 
 extend type Query {
   # Pedidos
-  obtenerPedidos: [Pedido]
+  obtenerPedidos(offset: Int, limit: Int): [Pedido]
+    @hasRole(roles: [ADMINISTRADOR, USUARIO])
+    @auth
   obtenerPedidosVendedor: [Pedido]
-  obtenerPedido(id: ID!): Pedido
+    @hasRole(roles: [ADMINISTRADOR, USUARIO])
+    @auth
+  obtenerPedido(id: ID!): Pedido @hasRole(roles: [ADMINISTRADOR, USUARIO]) @auth
   obtenerPedidosEstado(estado: String!): [Pedido]
+    @hasRole(roles: [ADMINISTRADOR, USUARIO])
+    @auth
+  totalPedidos: String!
 }
 
 extend type Mutation {
   # Pedidos
   actualizarPedido(id: ID!, input: PedidoInput): Pedido
+    @hasRole(roles: [ADMINISTRADOR, USUARIO])
+    @auth
   eliminarPedido(id: ID!): String
+    @hasRole(roles: [ADMINISTRADOR, USUARIO])
+    @auth
   nuevoPedido(input: PedidoInput): Pedido
+    @hasRole(roles: [ADMINISTRADOR, USUARIO])
+    @auth
 }

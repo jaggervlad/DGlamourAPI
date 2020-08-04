@@ -1,6 +1,5 @@
 type Producto {
   id: ID
-  codigo: String
   nombre: String
   existencia: Int
   precio: Float
@@ -12,7 +11,6 @@ type Producto {
 }
 
 input ProductoInput {
-  codigo: String!
   nombre: String!
   existencia: Int!
   precio: Float!
@@ -24,13 +22,19 @@ input ProductoInput {
 
 extend type Query {
   # Productos
-  obtenerProductos: [Producto]
+  obtenerProductos: [Producto] @hasRole(roles: [ADMINISTRADOR, USUARIO]) @auth
   obtenerProducto(id: ID!): Producto
+    @hasRole(roles: [ADMINISTRADOR, USUARIO])
+    @auth
 }
 
 extend type Mutation {
   # Productos
   nuevoProducto(input: ProductoInput!): Producto
+    @hasRole(roles: [ADMINISTRADOR])
+    @auth
   actualizarProducto(id: ID!, input: ProductoInput!): Producto
-  eliminarProducto(id: ID!): String
+    @hasRole(roles: [ADMINISTRADOR])
+    @auth
+  eliminarProducto(id: ID!): String @hasRole(roles: [ADMINISTRADOR]) @auth
 }

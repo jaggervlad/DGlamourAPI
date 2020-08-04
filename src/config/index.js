@@ -50,7 +50,7 @@ module.exports.SESS_OPTIONS = {
   saveUninitialized: false,
   cookie: {
     maxAge: +SESS_LIFETIME,
-    secure: IN_PROD,
+    secure: false,
     httpOnly: true,
     sameSite: true,
   },

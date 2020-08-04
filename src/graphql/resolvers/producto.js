@@ -28,16 +28,12 @@ module.exports = {
   },
   Mutation: {
     nuevoProducto: async (_, { input }) => {
-      const existProduct = await Producto.findOne({ codigo: input.codigo });
-      if (existProduct)
-        throw new Error(`El producto  ya existe en la base de datos`);
       try {
         const producto = new Producto(input);
         producto.id = producto._id;
         await producto.save();
         return producto;
       } catch (error) {
-        console.log(error);
         throw new Error('No se pudo crear el producto');
       }
     },

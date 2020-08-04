@@ -7,7 +7,7 @@ class GuestDirective extends SchemaDirectiveVisitor {
     const { resolve = defaultFieldResolver } = field;
     field.resolve = function (...args) {
       const context = args[2];
-      asegurarCierre(contex.req);
+      asegurarCierre(context.req);
 
       return resolve.apply(this, args);
     };

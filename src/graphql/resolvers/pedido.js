@@ -2,6 +2,7 @@ const { Pedido } = require('../../database/Pedido');
 const { Usuario } = require('../../database/Usuario');
 const { Producto } = require('../../database/Producto');
 const { Cliente } = require('../../database/Cliente');
+const _ = require('lodash');
 
 module.exports = {
   Pedido: {
@@ -13,11 +14,14 @@ module.exports = {
     },
   },
   Query: {
-    obtenerPedidos: async () => {
+    obtenerPedidos: async (_, { offset, limit }, __) => {
       try {
-        return await Pedido.find({}).sort({ _id: -1 });
+        return await Pedido.find({})
+          .limit(limit)
+          .skip(offset)
+          .sort({ _id: -1 });
       } catch (error) {
-        throw new Error('No se pudo obtener los pedidos!');
+        throw new Error('❌Error! ❌');
       }
     },
     obtenerPedidosVendedor: async (_, {}, ctx) => {
@@ -26,7 +30,7 @@ module.exports = {
           _id: -1,
         });
       } catch (error) {
-        throw new Error('No se pudo obtener a los pedidos por vendedor');
+        throw new Error('❌Error! ❌');
       }
     },
     obtenerPedido: async (_, { id }, ctx) => {
@@ -34,14 +38,22 @@ module.exports = {
       try {
         return await Pedido.findById(id);
       } catch (error) {
-        throw new Error('Pedido no encontrado');
+        throw new Error('❌Error! ❌');
       }
     },
     obtenerPedidosEstado: async (_, { estado }, ctx) => {
       try {
         return await Pedido.find({ vendedor: ctx.usuario.payload.id, estado });
       } catch (error) {
-        throw new Error('No se pudo obtener el estado del pedido');
+        throw new Error('❌Error! ❌');
+      }
+    },
+
+    totalPedidos: async (_, __, ___) => {
+      try {
+        return await Pedido.countDocuments();
+      } catch (error) {
+        throw new Error('❌Error! ❌');
       }
     },
   },
@@ -68,17 +80,10 @@ module.exports = {
       await nuevoPedido.save();
       return nuevoPedido;
     },
-    actualizarPedido: async (_, { id, input }, ctx) => {
-      const { cliente } = input;
-
+    actualizarPedido: async (_, { id, input }) => {
       const existePedido = await Pedido.findById(id);
       if (!existePedido) {
-        throw new Error('El pedido no existe');
-      }
-
-      const existeCliente = await Cliente.findById(cliente);
-      if (!existeCliente) {
-        throw new Error('El Cliente no existe');
+        throw new Error('❌Error! ❌');
       }
 
       if (input.estado === 'PAGADO') {
@@ -98,16 +103,20 @@ module.exports = {
         }
       }
 
-      return await Pedido.findOneAndUpdate({ _id: id }, input, {
-        new: true,
-      });
+      try {
+        return await Pedido.findOneAndUpdate({ _id: id }, input, {
+          new: true,
+        });
+      } catch (error) {
+        throw new Error('❌Error! ❌');
+      }
     },
     eliminarPedido: async (_, { id }) => {
       try {
         await Pedido.findOneAndDelete({ _id: id });
         return 'Pedido Eliminado';
       } catch (error) {
-        throw new Error('No se pudo eliminar el pedido');
+        throw new Error('❌Error! ❌');
       }
     },
   },

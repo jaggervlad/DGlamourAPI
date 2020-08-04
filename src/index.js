@@ -8,8 +8,6 @@ const { connectDB } = require('./database');
 // CONFIG VARIABLES
 const { PORT, SESS_OPTIONS, REDIS_OPTIONS, IN_PROD } = require('./config');
 
-app.disable('x-powered-by');
-
 // SESSIONS
 const session = require('express-session');
 const connectRedis = require('connect-redis');
