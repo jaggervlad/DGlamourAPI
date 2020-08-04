@@ -23,7 +23,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(helmet());
 app.use(morgan('common'));
-if (IN_PROD) app.set('trust proxy', 1);
 app.use(
   session({
     store,
