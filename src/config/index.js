@@ -48,9 +48,10 @@ module.exports.SESS_OPTIONS = {
   resave: false,
   rolling: true,
   saveUninitialized: false,
+  proxy: true,
   cookie: {
     maxAge: +SESS_LIFETIME,
-    secure: false,
+    secure: IN_PROD,
     httpOnly: true,
     sameSite: true,
   },
