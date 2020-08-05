@@ -9,6 +9,7 @@ const { connectDB } = require('./database');
 const { PORT, SESS_OPTIONS, REDIS_OPTIONS, IN_PROD } = require('./config');
 
 // SESSIONS
+const cookieSession = require('cookie-session');
 const session = require('express-session');
 const connectRedis = require('connect-redis');
 const Redis = require('ioredis');
@@ -23,11 +24,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(helmet());
 app.use(morgan('common'));
-app.enable('trust proxy');
+app.set('trust proxy', 1);
 app.use(
-  session({
-    store,
-    ...SESS_OPTIONS,
+  cookieSession({
+    name: 'sid',
+    secret: 'clave',
+    maxAge: 1000 * 60 * 60 * 24,
+    httpOnly: true,
+    sameSite: true,
+    secure: IN_PROD,
   })
 );
 
