@@ -47,8 +47,8 @@ module.exports = {
       return 'Bienvenido  a la aplicacion!';
     },
 
-    logout: async (_, __, { req, res }) => {
-      return cerrarSesion(req, res);
+    logout: async (_, __, { req }) => {
+      return cerrarSesion(req);
     },
   },
 };

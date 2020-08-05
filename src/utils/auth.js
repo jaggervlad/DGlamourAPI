@@ -16,15 +16,9 @@ module.exports.iniciarSesion = async ({ username, password }) => {
   return usuarioId;
 };
 
-module.exports.cerrarSesion = (req, res) => {
-  return new Promise((resolve, reject) => {
-    req.session.destroy((error) => {
-      if (error) reject(error);
-
-      res.clearCookie(SESS_NAME);
-      resolve(true);
-    });
-  });
+module.exports.cerrarSesion = (req) => {
+  req.session = null;
+  return true;
 };
 
 module.exports.asegurarInicio = (req) => {
