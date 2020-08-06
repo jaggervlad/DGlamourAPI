@@ -18,6 +18,9 @@ input AutenticarInput {
   password: String!
 }
 
+type Token {
+  token: String
+}
 enum RolUsuario {
   ADMINISTRADOR
   USUARIO
@@ -33,6 +36,6 @@ extend type Mutation {
   nuevoUsuario(id: ID, input: UsuarioInput): Usuario
     @hasRole(roles: [ADMINISTRADOR])
     @auth
-  autenticarUsuario(input: AutenticarInput): String @guest
+  autenticarUsuario(input: AutenticarInput): Token @guest
   logout: Boolean @auth
 }

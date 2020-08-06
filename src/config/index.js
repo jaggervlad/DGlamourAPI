@@ -1,13 +1,10 @@
-const ONE_DAY = 1000 * 60 * 60 * 24;
 const {
   // ENVIROMENT
   NODE_ENV = 'dev',
   PORT = 4000,
 
-  // SESSION EXPRESS
-  SESS_SECRET = '27b0a742e2112f067faee7959d5b5ca0aacd991ce8599cb0165ca0044024212e',
-  SESS_NAME = 'sid',
-  SESS_LIFETIME = ONE_DAY,
+  // JWT
+  JWT_SECRET = '27b0a742e2112f067faee7959d5b5ca0aacd991ce8599cb0165ca0044024212e',
 
   // REDIS
   REDIS_HOST = 'redis-17801.c17.us-east-1-4.ec2.cloud.redislabs.com',
@@ -23,7 +20,7 @@ const {
 
 const IN_PROD = NODE_ENV === 'production';
 
-module.exports = { IN_PROD, PORT, SESS_NAME };
+module.exports = { IN_PROD, PORT, JWT_SECRET };
 
 module.exports.DB_URI = `mongodb+srv://${DB_USERNAME}:${encodeURIComponent(
   DB_PASSWORD
@@ -40,21 +37,6 @@ module.exports.REDIS_OPTIONS = {
   host: REDIS_HOST,
   port: +REDIS_PORT,
   password: REDIS_PASSWORD,
-};
-
-module.exports.SESS_OPTIONS = {
-  name: SESS_NAME,
-  secret: SESS_SECRET,
-  resave: false,
-  rolling: true,
-  saveUninitialized: false,
-  proxy: true,
-  cookie: {
-    maxAge: +SESS_LIFETIME,
-    secure: IN_PROD,
-    httpOnly: true,
-    sameSite: true,
-  },
 };
 
 module.exports.APOLLO_OPTIONS = {

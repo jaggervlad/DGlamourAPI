@@ -27,8 +27,8 @@ class HasRoleDirective extends SchemaDirectiveVisitor {
     const roles = this.args.roles;
     field.resolve = async function (...args) {
       const context = args[2];
-      const { usuario } = context;
-      const rolUsuario = usuario.rol;
+      const { current } = context;
+      const rolUsuario = current.rol;
 
       if (roles.some((rol) => rolUsuario.indexOf(rol) !== -1)) {
         const result = await resolve.apply(this, args);

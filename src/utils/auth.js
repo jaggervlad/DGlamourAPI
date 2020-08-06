@@ -1,8 +1,10 @@
 const { Usuario } = require('../database/Usuario');
 const { AuthenticationError } = require('apollo-server-express');
-const { SESS_NAME } = require('../config');
+const _ = require('lodash');
+const { sign, verify } = require('jsonwebtoken');
+const { JWT_SECRET } = require('../config');
 
-const enLinea = (req) => req.session.usuarioId;
+const enLinea = (req) => req.headers['authorization'];
 
 module.exports.iniciarSesion = async ({ username, password }) => {
   const usuario = await Usuario.findOne({ username });
@@ -12,13 +14,7 @@ module.exports.iniciarSesion = async ({ username, password }) => {
     );
   }
   await usuario.comparePassword(password);
-  const usuarioId = usuario._id;
-  return usuarioId;
-};
-
-module.exports.cerrarSesion = (req) => {
-  req.session = null;
-  return true;
+  return usuario;
 };
 
 module.exports.asegurarInicio = (req) => {
@@ -35,11 +31,19 @@ module.exports.asegurarCierre = (req) => {
   return true;
 };
 
-module.exports.authContext = async (req) => {
-  const id = req.session.usuarioId;
+module.exports.authContext = async (authorization) => {
   try {
-    return await Usuario.findById(id);
+    const token = authorization.split(' ')[1];
+    const usuario = verify(token, JWT_SECRET);
+    return usuario;
   } catch (error) {
-    throw new Error('Error! No se pudo autenticar');
+    throw new AuthenticationError('No estas autenticado');
   }
+};
+
+module.exports.createToken = async (user) => {
+  const EXPIRES_IN = '1d';
+  const payload = _.pick(user, ['id', 'nombre', 'username', 'rol']);
+
+  return sign(payload, JWT_SECRET, { expiresIn: EXPIRES_IN });
 };

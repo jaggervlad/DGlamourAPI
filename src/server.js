@@ -21,17 +21,12 @@ module.exports.apolloServer = new ApolloServer({
     const loader = {
       single: new Single(),
     };
-    let usuario = null;
-
-    try {
-      const auth = await authContext(req);
-      if (auth) {
-        usuario = auth;
-      }
-    } catch (error) {
-      throw new Error('Debes Iniciar Sesion');
+    let current = null;
+    const authorization = req.headers['authorization'];
+    if (authorization) {
+      current = await authContext(authorization);
     }
 
-    return { req, res, usuario, loader };
+    return { req, res, current, loader };
   },
 });

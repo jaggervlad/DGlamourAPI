@@ -1,10 +1,14 @@
 const { Usuario } = require('../../database/Usuario');
-const { iniciarSesion, cerrarSesion } = require('../../utils/auth');
+const {
+  iniciarSesion,
+  cerrarSesion,
+  createToken,
+} = require('../../utils/auth');
 
 module.exports = {
   Query: {
     obtenerUsuario: async (_, __, ctx) => {
-      return ctx.usuario;
+      return ctx.current;
     },
   },
 
@@ -36,19 +40,14 @@ module.exports = {
         await usuario.save();
         return usuario;
       } catch (error) {
-        console.log(error);
         throw new Error('No se pudo crear al usuario!. Intentalo de nuevo');
       }
     },
-    autenticarUsuario: async (_, { input }, { req }) => {
+    autenticarUsuario: async (_, { input }) => {
       const { username, password } = input;
-      const usuarioId = await iniciarSesion({ username, password });
-      req.session.usuarioId = usuarioId;
-      return 'Bienvenido  a la aplicacion!';
-    },
+      const usuario = await iniciarSesion({ username, password });
 
-    logout: async (_, __, { req }) => {
-      return cerrarSesion(req);
+      return { token: createToken(usuario) };
     },
   },
 };
