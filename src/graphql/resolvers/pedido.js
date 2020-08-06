@@ -6,7 +6,7 @@ const _ = require('lodash');
 
 module.exports = {
   Pedido: {
-    vendedor: async (parent, _args, _context) => {
+    vendedor: async (parent, _args, { loader }) => {
       return await Usuario.findById(parent.vendedor);
     },
     cliente: async (parent, _args, _context) => {
@@ -59,6 +59,7 @@ module.exports = {
   },
   Mutation: {
     nuevoPedido: async (_, { input }, ctx) => {
+      console.log(input);
       const { cliente } = input;
       let clienteExiste = await Cliente.findById(cliente);
       if (!clienteExiste) throw new Error('Ese cliente no existe');
@@ -76,7 +77,7 @@ module.exports = {
 
       const nuevoPedido = new Pedido(input);
       nuevoPedido.id = nuevoPedido._id;
-      nuevoPedido.vendedor = ctx.usuario.id;
+      nuevoPedido.vendedor = ctx.current.id;
       await nuevoPedido.save();
       return nuevoPedido;
     },

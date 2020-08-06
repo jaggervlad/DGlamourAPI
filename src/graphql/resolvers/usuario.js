@@ -10,6 +10,13 @@ module.exports = {
     obtenerUsuario: async (_, __, ctx) => {
       return ctx.current;
     },
+    obtenerUsuarios: async (_, __, ___) => {
+      try {
+        return await Usuario.find({}).sort({ _id: -1 });
+      } catch (error) {
+        throw new Error('❌Error! ❌');
+      }
+    },
   },
 
   Mutation: {
@@ -26,7 +33,7 @@ module.exports = {
           await dbUsuario.save();
           return dbUsuario;
         } catch (error) {
-          throw new Error('No se pudo actualizar al usuario');
+          throw new Error('❌Error! ❌');
         }
       }
       // En caso de que sea nuevo
@@ -40,7 +47,7 @@ module.exports = {
         await usuario.save();
         return usuario;
       } catch (error) {
-        throw new Error('No se pudo crear al usuario!. Intentalo de nuevo');
+        throw new Error('❌Error! ❌');
       }
     },
     autenticarUsuario: async (_, { input }) => {
@@ -48,6 +55,15 @@ module.exports = {
       const usuario = await iniciarSesion({ username, password });
 
       return { token: createToken(usuario) };
+    },
+
+    eliminarUsuario: async (_, { id }) => {
+      try {
+        await Usuario.findByIdAndDelete(id);
+        return 'Usuario eliminado';
+      } catch (error) {
+        throw new Error('❌Error! ❌');
+      }
     },
   },
 };
