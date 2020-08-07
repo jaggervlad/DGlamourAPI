@@ -7,7 +7,6 @@ type Pedido {
   fecha: String
   estado: EstadoPedido
   direccion: String
-  codigo: String
   pago: TipoPago
   descripcion: String
 }
@@ -25,7 +24,6 @@ input PedidoInput {
   cliente: ID
   estado: EstadoPedido
   direccion: String
-  codigo: String
   pago: TipoPago
   descripcion: String
 }
@@ -62,6 +60,8 @@ extend type Query {
     @hasRole(roles: [ADMINISTRADOR, USUARIO])
     @auth
   totalPedidos: String!
+  pedidosPagados: [Pedido] @hasRole(roles: [ADMINISTRADOR, USUARIO]) @auth
+  pedidosPendientes: [Pedido] @hasRole(roles: [ADMINISTRADOR, USUARIO]) @auth
 }
 
 extend type Mutation {

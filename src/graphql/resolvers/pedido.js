@@ -56,6 +56,21 @@ module.exports = {
         throw new Error('❌Error! ❌');
       }
     },
+
+    pedidosPagados: async (_, __, ___) => {
+      try {
+        return Pedido.find({ estado: 'PAGADO' }).sort({ _id: -1 });
+      } catch (error) {
+        throw new Error('❌Error! ❌');
+      }
+    },
+    pedidosPendientes: async (_, __, ___) => {
+      try {
+        return Pedido.find({ estado: 'PENDIENTE' }).sort({ _id: -1 });
+      } catch (error) {
+        throw new Error('❌Error! ❌');
+      }
+    },
   },
   Mutation: {
     nuevoPedido: async (_, { input }, ctx) => {

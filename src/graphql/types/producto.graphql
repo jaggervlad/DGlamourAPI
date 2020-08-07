@@ -11,13 +11,13 @@ type Producto {
 }
 
 input ProductoInput {
-  nombre: String!
-  existencia: Int!
-  precio: Float!
-  categoria: ID!
-  marca: String!
-  undMed: String!
-  presentacion: String!
+  nombre: String
+  existencia: Int
+  precio: Float
+  categoria: ID
+  marca: String
+  undMed: String
+  presentacion: String
 }
 
 extend type Query {
@@ -33,7 +33,7 @@ extend type Mutation {
   nuevoProducto(input: ProductoInput!): Producto
     @hasRole(roles: [ADMINISTRADOR])
     @auth
-  actualizarProducto(id: ID!, input: ProductoInput!): Producto
+  actualizarProducto(id: ID!, input: ProductoInput): Producto
     @hasRole(roles: [ADMINISTRADOR])
     @auth
   eliminarProducto(id: ID!): String @hasRole(roles: [ADMINISTRADOR]) @auth

@@ -7,10 +7,10 @@ const {
   JWT_SECRET = 'secret',
 
   //DB
-  DB_USERNAME,
-  DB_PASSWORD,
-  DB_HOST,
-  DB_NAME,
+  DB_USERNAME = 'administrador',
+  DB_PASSWORD = 'C58dIq9PihZ8wixj',
+  DB_HOST = 'cluster0.mvoxt.mongodb.net',
+  DB_NAME = 'dglamourapi',
 } = process.env;
 
 const IN_PROD = NODE_ENV === 'production';
