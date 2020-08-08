@@ -74,7 +74,6 @@ module.exports = {
   },
   Mutation: {
     nuevoPedido: async (_, { input }, ctx) => {
-      console.log(input);
       const { cliente } = input;
       let clienteExiste = await Cliente.findById(cliente);
       if (!clienteExiste) throw new Error('Ese cliente no existe');
