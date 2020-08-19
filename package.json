@@ -29,10 +29,8 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.19",
     "moment": "^2.27.0",
-    "moment-jdateformatparser": "^1.2.1",
     "mongoose": "^5.9.20",
-    "morgan": "^1.10.0",
-    "pdfkit": "^0.11.0"
+    "morgan": "^1.10.0"
   },
   "devDependencies": {}
 }
