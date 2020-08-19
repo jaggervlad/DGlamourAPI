@@ -75,4 +75,5 @@ extend type Mutation {
   nuevoPedido(input: PedidoInput): Pedido
     @hasRole(roles: [ADMINISTRADOR, USUARIO])
     @auth
+  generarPdfPed(id: ID!): String
 }

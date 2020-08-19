@@ -2,7 +2,6 @@ const { Pedido } = require('../../database/Pedido');
 const { Usuario } = require('../../database/Usuario');
 const { Producto } = require('../../database/Producto');
 const { Cliente } = require('../../database/Cliente');
-const _ = require('lodash');
 
 module.exports = {
   Pedido: {
