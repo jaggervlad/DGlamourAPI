@@ -9,6 +9,7 @@ type Pedido {
   direccion: String
   pago: TipoPago
   descripcion: String
+  costEnv: Float
 }
 
 type PedidoGrupo {
@@ -26,6 +27,7 @@ input PedidoInput {
   direccion: String
   pago: TipoPago
   descripcion: String
+  costEnv: Float
 }
 
 input PedidoProductoInput {

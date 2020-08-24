@@ -49,6 +49,9 @@
     </tbody>
   </table>
 
+  <%if (pedido.costEnv) { %>
+  <p class="mx-2 my2 text-xl"> Costo de Envío: <span class="font-bold">$ <%= pedido.costEnv %></span> </p>
+  <% } %>
   <p class="mx-2 my2 text-xl"> Total Pedido: <span class="font-bold">$ <%= pedido.total %></span> </p>
 
   <div id="pageFooter">

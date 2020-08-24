@@ -36,6 +36,10 @@ const ProductoSchema = new Schema(
       type: String,
       trim: true,
     },
+    costEnv: {
+      type: Number,
+      trim: true,
+    },
     creado: {
       type: Date,
       default: Date.now(),
