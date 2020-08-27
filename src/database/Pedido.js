@@ -42,7 +42,7 @@ const ProductoSchema = new Schema(
     },
     creado: {
       type: Date,
-      default: Date.now(),
+      default: new Date(),
     },
   },
   { timestamps: true }

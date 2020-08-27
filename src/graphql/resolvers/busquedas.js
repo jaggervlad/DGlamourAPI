@@ -53,6 +53,22 @@ module.exports = {
         throw new Error('No se pudo obtener a los mejores vendedores!');
       }
     },
+
+    totalDeVentas: async (_, __) => {
+      try {
+        const res = await Pedido.find({ estado: 'PAGADO' });
+        const totalVentas = res.reduce(
+          (nuevoTotal, pedido) => (nuevoTotal += pedido.total),
+          0
+        );
+
+        console.log(res);
+        const total = totalVentas;
+        return { total };
+      } catch (error) {
+        throw new Error('💥ERROR💥');
+      }
+    },
     buscarProducto: async (_, { texto }) => {
       try {
         return await Producto.find({

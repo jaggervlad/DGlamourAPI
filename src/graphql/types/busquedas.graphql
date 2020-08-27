@@ -8,9 +8,14 @@ type TopVendedor {
   vendedor: [Usuario]
 }
 
+type VentasTotal {
+  total: Float
+}
+
 extend type Query {
   # Busquedas Avanzadas
   mejoresClientes: [TopCliente] @hasRole(roles: [ADMINISTRADOR]) @auth
   mejoresVendedores: [TopVendedor] @hasRole(roles: [ADMINISTRADOR]) @auth
+  totalDeVentas: VentasTotal
   buscarProducto(texto: String!): [Producto]
 }
